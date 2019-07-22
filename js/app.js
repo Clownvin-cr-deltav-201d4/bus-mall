@@ -32,7 +32,7 @@
     }
   }
 
-  const products = [
+  var products = [
     new Product('R2D2 Bag', 'bag'),
     new Product('Banana Slicer', 'banana'),
     new Product('Bathroom-Pad', 'bathroom'),
@@ -55,12 +55,7 @@
     new Product('Enclosed Wine-Glass', 'wine-glass'),
   ];
 
-  var cycles = 0;
-
-  function disableProducts() {
-    products.forEach((product) => product.disable());
-  }
-
+  var iterations = 0;
   var shownLastTime = [];
 
   function showNextProducts(count) {
@@ -68,10 +63,9 @@
     //Like, move to pure HTML for example.
     var images = document.createElement('div');
     images.id = 'product-set';
-    var options = products.filter((value) => {
+    var options = products.filter(value => {
       for (var product of shownLastTime) {
         if (value === product) {
-          console.log('filtering');
           return false;
         }
       }
@@ -101,16 +95,20 @@
     root.appendChild(resultsList);
   }
 
+  function disableProducts() {
+    products.forEach(product => product.disable());
+  }
+
   function clickProduct(product) {
     product.click();
-    if (cycles++ < 25) {
-      showNextProducts(10);
+    if (iterations++ < 25) {
+      showNextProducts(3);
     } else {
       disableProducts();
       showResults();
     }
   }
 
-  showNextProducts(10);
+  showNextProducts(3);
 
 })();
