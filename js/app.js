@@ -2,9 +2,9 @@
   'use strict';
 
   class Product {
-    constructor(name, ext = 'jpg') {
+    constructor(name, imgName, ext = 'jpg') {
       this.name = name;
-      this.image = `img/${name}.${ext}`;
+      this.image = `img/${imgName}.${ext}`;
       this.timesClicked = 0;
       //Create permanent product element from img tag.
       this.productElement = document.createElement('img');
@@ -33,26 +33,26 @@
   }
 
   const products = [
-    new Product('bag'),
-    new Product('banana'),
-    new Product('bathroom'),
-    new Product('boots'),
-    new Product('breakfast'),
-    new Product('bubblegum'),
-    new Product('chair'),
-    new Product('cthulhu'),
-    new Product('dog-duck'),
-    new Product('dragon'),
-    new Product('pen'),
-    new Product('pet-sweep'),
-    new Product('scissors'),
-    new Product('shark'),
-    new Product('sweep', 'png'),
-    new Product('tauntaun'),
-    new Product('unicorn'),
-    new Product('usb', 'gif'),
-    new Product('water-can'),
-    new Product('wine-glass'),
+    new Product('R2D2 Bag', 'bag'),
+    new Product('Banana Slicer', 'banana'),
+    new Product('Bathroom-Pad', 'bathroom'),
+    new Product('Useless Boots', 'boots'),
+    new Product('All-in-one Breakfast Machine', 'breakfast'),
+    new Product('Meatball Bubblegum', 'bubblegum'),
+    new Product('Inverse  Chair', 'chair'),
+    new Product('Cthulhu Action Figure', 'cthulhu'),
+    new Product('Duck-like Muzzle For Dogs', 'dog-duck'),
+    new Product('Dragon Meat', 'dragon'),
+    new Product('Utensil Pen', 'pen'),
+    new Product('Pet-Sweep', 'pet-sweep'),
+    new Product('Pizza Scissors', 'scissors'),
+    new Product('Shark Attack Sleeping Bag', 'shark'),
+    new Product('Terribly Unhealthy Baby Mop', 'sweep', 'png'),
+    new Product('Tauntaun Sleeping Bag', 'tauntaun'),
+    new Product('Unicorn Meat', 'unicorn'),
+    new Product('Tentacle USB', 'usb', 'gif'),
+    new Product('Unusable Watering Can', 'water-can'),
+    new Product('Enclosed Wine-Glass', 'wine-glass'),
   ];
 
   var cycles = 0;
@@ -71,6 +71,7 @@
     var options = products.filter((value) => {
       for (var product of shownLastTime) {
         if (value === product) {
+          console.log('filtering');
           return false;
         }
       }
@@ -93,7 +94,7 @@
     products.forEach(product => {
       var result = document.createElement('li');
       result.classList.add('result');
-      result.textContent = `${product.name} - ${product.timesClicked}`;
+      result.textContent = `${product.timesClicked} votes for the ${product.name}`;
       resultsList.appendChild(result);
     });
     var root = document.getElementById('root');
@@ -103,13 +104,13 @@
   function clickProduct(product) {
     product.click();
     if (cycles++ < 25) {
-      showNextProducts(5);
+      showNextProducts(10);
     } else {
       disableProducts();
       showResults();
     }
   }
 
-  showNextProducts(5);
+  showNextProducts(10);
 
 })();
