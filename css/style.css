@@ -1,4 +1,30 @@
+body {
+  height: 100vh;
+  background: linear-gradient(#D0D0D0, #808080);
+  text-align: center;
+}
+.product-image, #results {
+  border-radius: 5px;
+  box-shadow: 0 2px 5px #666;
+  margin: 1.5%;
+}
+
 .product-image {
   width: 128px;
   height: 128px;
+}
+
+#results {
+  width: 384px;
+  height: 33%;
+  margin: 0 auto;
+  text-align: center;
+  background: linear-gradient(#EBEBEB,#DFDFDF);
+  padding: 15px;
+}
+
+.result {
+  font-family: 'Roboto', sans-serif;
+  
+  margin: 1%;
 }
