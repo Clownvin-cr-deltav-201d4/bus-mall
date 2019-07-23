@@ -1,17 +1,22 @@
 body {
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   background: linear-gradient(#D0D0D0, #808080);
   text-align: center;
 }
-.product-image, #results {
+.product, #results {
   border-radius: 5px;
   box-shadow: 0 2px 5px #666;
   margin: 1.5%;
 }
 
-.product-image {
+.product {
+  display: inline-block;
   width: 128px;
   height: 128px;
+  background-position:center;
+  background-size: 100%;
+  background-repeat:no-repeat;
 }
 
 #results {
@@ -25,6 +30,5 @@ body {
 
 .result {
   font-family: 'Roboto', sans-serif;
-  
   margin: 1%;
 }

@@ -2,17 +2,16 @@
   'use strict';
 
   class Product {
-    constructor(name, imgName, ext = 'jpg') {
+    constructor(name, imgName = name, ext = 'jpg') {
       this.name = name;
       this.image = `img/${imgName}.${ext}`;
       this.timesClicked = 0;
       //Create permanent product element from img tag.
-      this.productElement = document.createElement('img');
+      this.productElement = document.createElement('div');
       this.productElement.id = this.name;
-      this.productElement.src = this.image;
-      this.productElement.classList.add('product-image');
+      this.productElement.style.backgroundImage = `url(${this.image})`;
+      this.productElement.classList.add('product');
       this.clickHandler = () => clickProduct(this);
-      this.enable();
     }
 
     enable() {
@@ -28,7 +27,7 @@
     }
 
     click() {
-      ++this.timesClicked;
+      this.timesClicked++;
     }
   }
 
@@ -53,26 +52,52 @@
     new Product('Tentacle USB', 'usb', 'gif'),
     new Product('Unusable Watering Can', 'water-can'),
     new Product('Enclosed Wine-Glass', 'wine-glass'),
+/// Begining of non-canon Products, comment out if not wanted. ///
+    // new Product('Animal Footprint Shoes', 'animal-footprint-shoes'),
+    // new Product('Bacon Frosting', 'bacon-frosting'),
+    // new Product('Butter Stick', 'butter', 'jpeg'),
+    // new Product('Diet Water', 'diet-water'),
+    // new Product('Fork On Chain', 'fork-on-chain'),
+    // new Product('Fork Pizza Cutter', 'fork-pizza-cutter'),
+    // new Product('Useless Fork', 'fork'),
+    // new Product('Hand Squirrel', 'hand-squirrel'),
+    // new Product('Keyboard Waffle Maker', 'keyboard-waffle'),
+    // new Product('Noodley Knife', 'noodle-knife'),
+    // new Product('USB Pet Rock', 'pet-rock'),
+    // new Product('Useless Spoon', 'spoon'),
   ];
 
   var iterations = 0;
   var shownLastTime = [];
+  var productCount = 3;
+
+  function clickProduct(product) {
+    product.click();
+    if (iterations++ < 25) {
+      showNextProducts(productCount);
+    } else {
+      disableProducts();
+      showResults();
+    }
+  }
+
+  function enableProducts() {
+    products.forEach(product => product.enable());
+  }
+
+  function disableProducts() {
+    products.forEach(product => product.disable());
+  }
 
   function showNextProducts(count) {
     //TODO potentially do something else with "images"
     //Like, move to pure HTML for example.
     var images = document.createElement('div');
     images.id = 'product-set';
-    var options = products.filter(value => {
-      for (var product of shownLastTime) {
-        if (value === product) {
-          return false;
-        }
-      }
-      return true;
-    });
+
+    var options = products.filter(value => !shownLastTime.includes(value));
     shownLastTime = [];
-    for (var i = 0; i < count; i++) {
+    for (var i = 0; i < count && i < options.length; i++) {
       var selected = options.splice(Math.floor(Math.random() * options.length), 1)[0];
       images.appendChild(selected.getProductElement());
       shownLastTime.push(selected);
@@ -95,20 +120,7 @@
     root.appendChild(resultsList);
   }
 
-  function disableProducts() {
-    products.forEach(product => product.disable());
-  }
-
-  function clickProduct(product) {
-    product.click();
-    if (iterations++ < 25) {
-      showNextProducts(3);
-    } else {
-      disableProducts();
-      showResults();
-    }
-  }
-
-  showNextProducts(3);
+  enableProducts();
+  showNextProducts(productCount);
 
 })();
