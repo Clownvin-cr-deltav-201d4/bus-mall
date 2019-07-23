@@ -94,14 +94,8 @@
     //Like, move to pure HTML for example.
     var images = document.createElement('div');
     images.id = 'product-set';
-    var options = products.filter(value => {
-      for (var product of shownLastTime) {
-        if (value === product) {
-          return false;
-        }
-      }
-      return true;
-    });
+
+    var options = products.filter(value => !shownLastTime.includes(value));
     shownLastTime = [];
     for (var i = 0; i < count && i < options.length; i++) {
       var selected = options.splice(Math.floor(Math.random() * options.length), 1)[0];
