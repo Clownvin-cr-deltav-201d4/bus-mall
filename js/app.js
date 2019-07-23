@@ -52,19 +52,19 @@
     new Product('Tentacle USB', 'usb', 'gif'),
     new Product('Unusable Watering Can', 'water-can'),
     new Product('Enclosed Wine-Glass', 'wine-glass'),
-/// Begining of non-canon Products, comment out if not wanted. ///
-    // new Product('Animal Footprint Shoes', 'animal-footprint-shoes'),
-    // new Product('Bacon Frosting', 'bacon-frosting'),
-    // new Product('Butter Stick', 'butter', 'jpeg'),
-    // new Product('Diet Water', 'diet-water'),
-    // new Product('Fork On Chain', 'fork-on-chain'),
-    // new Product('Fork Pizza Cutter', 'fork-pizza-cutter'),
-    // new Product('Useless Fork', 'fork'),
-    // new Product('Hand Squirrel', 'hand-squirrel'),
-    // new Product('Keyboard Waffle Maker', 'keyboard-waffle'),
-    // new Product('Noodley Knife', 'noodle-knife'),
-    // new Product('USB Pet Rock', 'pet-rock'),
-    // new Product('Useless Spoon', 'spoon'),
+    /// Begining of non-canon Products, comment out if not wanted. ///
+    new Product('Animal Footprint Shoes', 'animal-footprint-shoes'),
+    new Product('Bacon Frosting', 'bacon-frosting'),
+    new Product('Butter Stick', 'butter', 'jpeg'),
+    new Product('Diet Water', 'diet-water'),
+    new Product('Fork On Chain', 'fork-on-chain'),
+    new Product('Fork Pizza Cutter', 'fork-pizza-cutter'),
+    new Product('Useless Fork', 'fork'),
+    new Product('Hand Squirrel', 'hand-squirrel'),
+    new Product('Keyboard Waffle Maker', 'keyboard-waffle'),
+    new Product('Noodley Knife', 'noodle-knife'),
+    new Product('USB Pet Rock', 'pet-rock'),
+    new Product('Useless Spoon', 'spoon'),
   ];
 
   var iterations = 0;
@@ -107,17 +107,59 @@
     root.appendChild(images);
   }
 
-  function showResults() {
-    var resultsList = document.createElement('ul');
-    resultsList.id = 'results';
-    products.forEach(product => {
-      var result = document.createElement('li');
-      result.classList.add('result');
-      result.textContent = `${product.timesClicked} votes for the ${product.name}`;
-      resultsList.appendChild(result);
+  function createChart(context, labels, dataLabel, data) {
+    const BG_COLORS = ['#9dff00', '#009dff', '#ff009d',];
+    const BORDER_COLOR = '#747474';
+
+    var bgColors = [];
+    var borderColors = [];
+
+    for (var i = 0; i < data.length; i++) {
+      bgColors.push(BG_COLORS[i % BG_COLORS.length]);
+      borderColors.push(BORDER_COLOR);
+    }
+
+    return new Chart(context, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: dataLabel,
+          data: data,
+          backgroundColor: bgColors,
+          borderColor: borderColors,
+          borderWidth: 3
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
     });
+  }
+
+  function showResults() {
+    var canvas = document.createElement('canvas');
+    canvas.id = 'results';
+    var context2d = canvas.getContext('2d');
+
+    var labels = [];
+    var data = [];
+
+    products.forEach(product => {
+      labels.push(product.name);
+      data.push(product.timesClicked);
+    });
+
+    createChart(context2d, labels, 'Number of Votes', data);
+
     var root = document.getElementById('root');
-    root.appendChild(resultsList);
+    root.appendChild(canvas);
   }
 
   enableProducts();
