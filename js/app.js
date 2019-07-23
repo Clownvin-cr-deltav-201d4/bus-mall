@@ -7,10 +7,10 @@
       this.image = `img/${imgName}.${ext}`;
       this.timesClicked = 0;
       //Create permanent product element from img tag.
-      this.productElement = document.createElement('img');
+      this.productElement = document.createElement('div');
       this.productElement.id = this.name;
-      this.productElement.src = this.image;
-      this.productElement.classList.add('product-image');
+      this.productElement.style.backgroundImage = `url(${this.image})`;
+      this.productElement.classList.add('product');
       this.clickHandler = () => clickProduct(this);
     }
 
@@ -53,26 +53,23 @@
     new Product('Unusable Watering Can', 'water-can'),
     new Product('Enclosed Wine-Glass', 'wine-glass'),
 /// Begining of non-canon Products, comment out if not wanted. ///
-    new Product('Animal Footprint Shoes', 'animal-footprint-shoes'),
-    new Product('Bacon Frosting', 'bacon-frosting'),
-    new Product('Butter Stick', 'butter', 'jpeg'),
-    new Product('Diet Water', 'diet-water'),
-    new Product('Fork On Chain', 'fork-on-chain'),
-    new Product('Fork Pizza Cutter', 'fork-pizza-cutter'),
-    new Product('Useless Fork', 'fork'),
-    new Product('Hand Squirrel', 'hand-squirrel'),
-    new Product('Keyboard Waffle Maker', 'keyboard-waffle'),
-    new Product('Noodley Knife', 'noodle-knife'),
-    new Product('USB Pet Rock', 'pet-rock'),
-    new Product('Useless Spoon', 'spoon'),
+    // new Product('Animal Footprint Shoes', 'animal-footprint-shoes'),
+    // new Product('Bacon Frosting', 'bacon-frosting'),
+    // new Product('Butter Stick', 'butter', 'jpeg'),
+    // new Product('Diet Water', 'diet-water'),
+    // new Product('Fork On Chain', 'fork-on-chain'),
+    // new Product('Fork Pizza Cutter', 'fork-pizza-cutter'),
+    // new Product('Useless Fork', 'fork'),
+    // new Product('Hand Squirrel', 'hand-squirrel'),
+    // new Product('Keyboard Waffle Maker', 'keyboard-waffle'),
+    // new Product('Noodley Knife', 'noodle-knife'),
+    // new Product('USB Pet Rock', 'pet-rock'),
+    // new Product('Useless Spoon', 'spoon'),
   ];
 
   var iterations = 0;
   var shownLastTime = [];
-  var productCount = 5;
-
-  enableProducts();
-  showNextProducts(productCount);
+  var productCount = 3;
 
   function clickProduct(product) {
     product.click();
@@ -128,5 +125,8 @@
     var root = document.getElementById('root');
     root.appendChild(resultsList);
   }
+
+  enableProducts();
+  showNextProducts(productCount);
 
 })();
