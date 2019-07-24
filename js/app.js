@@ -9,7 +9,6 @@
       if (!(this.timesClicked = window.localStorage.getItem(`${this.name}-click-count`)) || isNaN(this.timesClicked)) {
         this.timesClicked = 0;
       }
-      console.log(`${name} starting with ${this.timesClicked}`);
       //Create permanent product element from div tag.
       this.productElement = document.createElement('div');
       this.productElement.id = this.name;
