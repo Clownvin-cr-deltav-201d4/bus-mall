@@ -7,16 +7,31 @@ body {
 .product, #results {
   border-radius: 5px;
   box-shadow: 0 2px 5px #666;
+  background: linear-gradient(#EBEBEB,#DFDFDF);
   margin: 1.5%;
 }
 
 .product {
   display: inline-block;
-  width: 25vmin;
-  height: 25vmin;
+  width: 15vw;
+  height: 15vw;
+  background-color: #C7C7C7;
   background-position:center;
   background-size: 100%;
   background-repeat:no-repeat;
+  overflow: hidden;
+}
+
+.product-header {
+  border-radius: 5px 5px 0 0;
+  padding: 2.5% 0 2.5% 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 85%;
+  font-weight:  600;
+  color: #555555;
+  text-shadow: 4px 4px 5px #AFAFAF;
+  background: linear-gradient(#EBEBEB,#DFDFDF);
+
 }
 
 #results {
@@ -24,7 +39,6 @@ body {
   margin: auto;
   margin-bottom: 5%;
   text-align: center;
-  background: linear-gradient(#EBEBEB,#DFDFDF);
   padding: 15px;
 }
 
