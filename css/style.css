@@ -31,7 +31,7 @@ body {
   color: #555555;
   text-shadow: 4px 4px 5px #AFAFAF;
   background: linear-gradient(#EBEBEB,#DFDFDF);
-
+  user-select: none;
 }
 
 #results {
@@ -40,9 +40,4 @@ body {
   margin-bottom: 5%;
   text-align: center;
   padding: 15px;
-}
-
-.result {
-  font-family: 'Roboto', sans-serif;
-  margin: 1%;
 }
