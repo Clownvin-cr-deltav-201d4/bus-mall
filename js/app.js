@@ -41,47 +41,6 @@
     }
   }
 
-  var products = [
-    new Product('R2D2 Bag', 'bag'),
-    new Product('Banana Slicer', 'banana'),
-    new Product('Bathroom-Pad', 'bathroom'),
-    new Product('Useless Boots', 'boots'),
-    new Product('All-in-one Breakfast Machine', 'breakfast'),
-    new Product('Meatball Bubblegum', 'bubblegum'),
-    new Product('Inverse  Chair', 'chair'),
-    new Product('Cthulhu Action Figure', 'cthulhu'),
-    new Product('Duck-like Muzzle For Dogs', 'dog-duck'),
-    new Product('Dragon Meat', 'dragon'),
-    new Product('Utensil Pen', 'pen'),
-    new Product('Pet-Sweep', 'pet-sweep'),
-    new Product('Pizza Scissors', 'scissors'),
-    new Product('Shark Attack Sleeping Bag', 'shark'),
-    new Product('Terribly Unhealthy Baby Mop', 'sweep', 'png'),
-    new Product('Tauntaun Sleeping Bag', 'tauntaun'),
-    new Product('Unicorn Meat', 'unicorn'),
-    new Product('Tentacle USB', 'usb', 'gif'),
-    new Product('Unusable Watering Can', 'water-can'),
-    new Product('Enclosed Wine-Glass', 'wine-glass'),
-    /// Begining of non-canon Products, comment out if not wanted. ///
-    new Product('Animal Footprint Shoes', 'animal-footprint-shoes'),
-    new Product('Bacon Frosting', 'bacon-frosting'),
-    new Product('Butter Stick', 'butter', 'jpeg'),
-    new Product('Diet Water', 'diet-water'),
-    new Product('Fork On Chain', 'fork-on-chain'),
-    new Product('Fork Pizza Cutter', 'fork-pizza-cutter'),
-    new Product('Useless Fork', 'fork'),
-    new Product('Hand Squirrel', 'hand-squirrel'),
-    new Product('Keyboard Waffle Maker', 'keyboard-waffle'),
-    new Product('Noodley Knife', 'noodle-knife'),
-    new Product('USB Pet Rock', 'pet-rock'),
-    new Product('Useless Spoon', 'spoon'),
-  ];
-
-  var iterations = 0;
-  var shownLastTime = [];
-
-  var productCount = 10;
-
   function clickProduct(product) {
     product.click();
     if (iterations++ < 25) {
@@ -90,6 +49,7 @@
       disableProducts();
       showResults();
     }
+    window.localStorage.setItem('iterations', iterations);
   }
 
   function enableProducts() {
@@ -159,17 +119,83 @@
       data.push(product.timesClicked);
     });
 
-    var canvas = document.createElement('canvas');
-    canvas.id = 'results';
+    var canvas = document.getElementById('results');
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.id = 'results';
+
+      var root = document.getElementById('root');
+      root.appendChild(canvas);
+    }
+
     var context2d = canvas.getContext('2d');
 
     createChart(context2d, labels, 'Number of Votes', data);
-
-    var root = document.getElementById('root');
-    root.appendChild(canvas);
   }
 
-  enableProducts();
+  function resetAll() {
+    products.forEach(product => {
+      product.timesClicked = 0;
+    });
+    iterations = 0;
+    window.localStorage.clear();
+  }
+
+  var products = [
+    new Product('R2D2 Bag', 'bag'),
+    new Product('Banana Slicer', 'banana'),
+    new Product('Bathroom-Pad', 'bathroom'),
+    new Product('Useless Boots', 'boots'),
+    new Product('All-in-one Breakfast Machine', 'breakfast'),
+    new Product('Meatball Bubblegum', 'bubblegum'),
+    new Product('Inverse  Chair', 'chair'),
+    new Product('Cthulhu Action Figure', 'cthulhu'),
+    new Product('Duck-like Muzzle For Dogs', 'dog-duck'),
+    new Product('Dragon Meat', 'dragon'),
+    new Product('Utensil Pen', 'pen'),
+    new Product('Pet-Sweep', 'pet-sweep'),
+    new Product('Pizza Scissors', 'scissors'),
+    new Product('Shark Attack Sleeping Bag', 'shark'),
+    new Product('Terribly Unhealthy Baby Mop', 'sweep', 'png'),
+    new Product('Tauntaun Sleeping Bag', 'tauntaun'),
+    new Product('Unicorn Meat', 'unicorn'),
+    new Product('Tentacle USB', 'usb', 'gif'),
+    new Product('Unusable Watering Can', 'water-can'),
+    new Product('Enclosed Wine-Glass', 'wine-glass'),
+    /// Begining of non-canon Products, comment out if not wanted. ///
+    new Product('Animal Footprint Shoes', 'animal-footprint-shoes'),
+    new Product('Bacon Frosting', 'bacon-frosting'),
+    new Product('Butter Stick', 'butter', 'jpeg'),
+    new Product('Diet Water', 'diet-water'),
+    new Product('Fork On Chain', 'fork-on-chain'),
+    new Product('Fork Pizza Cutter', 'fork-pizza-cutter'),
+    new Product('Useless Fork', 'fork'),
+    new Product('Hand Squirrel', 'hand-squirrel'),
+    new Product('Keyboard Waffle Maker', 'keyboard-waffle'),
+    new Product('Noodley Knife', 'noodle-knife'),
+    new Product('USB Pet Rock', 'pet-rock'),
+    new Product('Useless Spoon', 'spoon'),
+  ];
+
+  var iterations = window.localStorage.getItem('iterations');
+  if (!iterations) {
+    iterations = 0;
+  }
+  var shownLastTime = [];
+
+  var productCount = 10;
+
   showNextProducts(productCount);
 
+  if (iterations < 25) {
+    enableProducts();
+  } else {
+    showResults();
+  }
+
+  document.getElementById('reset').addEventListener('click', () => {
+    resetAll();
+    showNextProducts(productCount);
+    enableProducts();
+  });
 })();
