@@ -2,16 +2,25 @@
   'use strict';
 
   class Product {
+
     constructor(name, imgName = name, ext = 'jpg') {
       this.name = name;
       this.image = `img/${imgName}.${ext}`;
-      this.timesClicked = 0;
-      //Create permanent product element from img tag.
+      if (!(this.timesClicked = window.localStorage.getItem(`${this.name}-click-count`)) || isNaN(this.timesClicked)) {
+        this.timesClicked = 0;
+      }
+      console.log(`${name} starting with ${this.timesClicked}`);
+      //Create permanent product element from div tag.
       this.productElement = document.createElement('div');
       this.productElement.id = this.name;
       this.productElement.style.backgroundImage = `url(${this.image})`;
       this.productElement.classList.add('product');
       this.clickHandler = () => clickProduct(this);
+      //Create and attach product header.
+      let productHeader = document.createElement('h3');
+      productHeader.classList.add('product-header');
+      productHeader.textContent = name;
+      this.productElement.appendChild(productHeader);
     }
 
     enable() {
@@ -28,6 +37,7 @@
 
     click() {
       this.timesClicked++;
+      window.localStorage.setItem(`${this.name}-click-count`, this.timesClicked);
     }
   }
 
@@ -69,7 +79,8 @@
 
   var iterations = 0;
   var shownLastTime = [];
-  var productCount = 3;
+
+  var productCount = 10;
 
   function clickProduct(product) {
     product.click();
@@ -90,8 +101,6 @@
   }
 
   function showNextProducts(count) {
-    //TODO potentially do something else with "images"
-    //Like, move to pure HTML for example.
     var images = document.createElement('div');
     images.id = 'product-set';
 
@@ -107,16 +116,14 @@
     root.appendChild(images);
   }
 
-  function createChart(context, labels, dataLabel, data) {
-    const BG_COLORS = ['#9dff00', '#009dff', '#ff009d',];
-    const BORDER_COLOR = '#747474';
+  function createChart(context, labels, dataLabel, data, palette = ['#9dff00', '#009dff', '#ff009d',], borderPalette = ['#747474'], borderWidth = 1) {
 
     var bgColors = [];
     var borderColors = [];
 
     for (var i = 0; i < data.length; i++) {
-      bgColors.push(BG_COLORS[i % BG_COLORS.length]);
-      borderColors.push(BORDER_COLOR);
+      bgColors.push(palette[i % palette.length]);
+      borderColors.push(borderPalette[i % borderPalette.length]);
     }
 
     return new Chart(context, {
@@ -128,14 +135,14 @@
           data: data,
           backgroundColor: bgColors,
           borderColor: borderColors,
-          borderWidth: 3
+          borderWidth: borderWidth,
         }]
       },
       options: {
         scales: {
           yAxes: [{
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
             }
           }]
         }
@@ -144,10 +151,6 @@
   }
 
   function showResults() {
-    var canvas = document.createElement('canvas');
-    canvas.id = 'results';
-    var context2d = canvas.getContext('2d');
-
     var labels = [];
     var data = [];
 
@@ -155,6 +158,10 @@
       labels.push(product.name);
       data.push(product.timesClicked);
     });
+
+    var canvas = document.createElement('canvas');
+    canvas.id = 'results';
+    var context2d = canvas.getContext('2d');
 
     createChart(context2d, labels, 'Number of Votes', data);
 
