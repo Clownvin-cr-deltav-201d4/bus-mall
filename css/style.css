@@ -4,15 +4,17 @@ body {
   background: linear-gradient(#D0D0D0, #808080);
   text-align: center;
 }
-.product, #results {
+.product, #results, #reset {
   border-radius: 5px;
   box-shadow: 0 2px 5px #666;
   background: linear-gradient(#EBEBEB,#DFDFDF);
-  margin: 1.5%;
+  margin: .66vmin;
 }
 
 .product {
   display: inline-block;
+  min-width: 128px;
+  min-height: 128px;
   width: 15vw;
   height: 15vw;
   background-color: #C7C7C7;
@@ -24,7 +26,7 @@ body {
 
 .product-header {
   border-radius: 5px 5px 0 0;
-  padding: 2.5% 0 2.5% 0;
+  padding: 3.5% 0 3.5% 0;
   font-family: 'Roboto', sans-serif;
   font-size: 85%;
   font-weight:  600;
@@ -35,9 +37,20 @@ body {
 }
 
 #results {
-  max-width: 85vw;
   margin: auto;
-  margin-bottom: 5%;
+  margin-bottom: 10vmin;
   text-align: center;
   padding: 15px;
+  max-width: 75.7vw;
+}
+
+#content-wrapper {
+  margin: 0 10vmin;
+}
+
+#reset {
+  width: 100%;
+  margin: 1.5% 0;
+  padding: 15px;
+  user-select: none;
 }
